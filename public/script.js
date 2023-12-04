@@ -69,26 +69,26 @@ const displayDetails = (car) => {
     const h3 = document.createElement("h3");
     h3.innerHTML = car.make + " " + car.model;
     carDetails.append(h3);
-    h3.classList.add("pad-this");
+    h3.classList.add("spacing");
 
     const p1 = document.createElement("p");
     carDetails.append(p1);
     p1.innerHTML = 'Year: ' + car.year;
-    p1.classList.add("pad-this");
+    p1.classList.add("spacing");
 
     const p2 = document.createElement("p");
     carDetails.append(p2);
     p2.innerHTML = 'Type: ' + car.type;
-    p2.classList.add("pad-this");
+    p2.classList.add("spacing");
 
     const ul = document.createElement("ul");
     carDetails.append(ul);
-    ul.classList.add("pad-this");
+    ul.classList.add("spacing");
 
-    car.features.forEach((feature) => {
+    car.chars.forEach((char) => {
         const li = document.createElement("li");
         ul.append(li);
-        li.innerHTML = feature;
+        li.innerHTML = char;
     });
 
     const editButton = document.createElement("button");
@@ -132,13 +132,13 @@ const populateEditForm = (car) => {
     form.year.value = car.year;
     form.type.value = car.type;
 
-    document.getElementById("feature-boxes").innerHTML = "";
+    document.getElementById("char-group").innerHTML = "";
 
-    car.features.forEach((feature) => {
+    car.chars.forEach((char) => {
         const input = document.createElement("input");
         input.type = "text";
-        input.value = feature;
-        document.getElementById("feature-boxes").appendChild(input);
+        input.value = char;
+        document.getElementById("char-group").appendChild(input);
     });
 };
 
@@ -148,7 +148,7 @@ const addEditCar = async (e) => {
     const formData = new FormData(form);
     const dataStatus = document.getElementById("data-status");
     let response;
-    formData.append("features", getFeatures());
+    formData.append("chars", getChars());
 
     if (form._id.value == -1) {
         formData.delete("_id");
@@ -168,12 +168,11 @@ const addEditCar = async (e) => {
 
     if (response.status !== 200) {
         dataStatus.classList.remove("hidden");
-        dataStatus.innerHTML = "Error Posting Data!";
+        dataStatus.innerHTML = "Error with Data!";
         setTimeout(() => {
             dataStatus.classList.add("hidden");
         }, 3000);
-        console.error("Error posting data");
-        // console.error(response.status);
+        console.error("Error with data");
         return;
     }
 
@@ -188,22 +187,22 @@ const addEditCar = async (e) => {
     showCars();
 };
 
-const getFeatures = () => {
-    const inputs = document.querySelectorAll("#feature-boxes input");
-    let features = [];
+const getChars = () => {
+    const inputs = document.querySelectorAll("#char-group input");
+    let chars = [];
 
     inputs.forEach((input) => {
-        features.push(input.value);
+        chars.push(input.value);
     });
 
-    return features;
+    return chars;
 }
 
 const resetForm = () => {
     const form = document.getElementById("car-form");
     form.reset();
     form._id.value = "-1";
-    document.getElementById("feature-boxes").innerHTML = "";
+    document.getElementById("char-group").innerHTML = "";
 };
 
 const showHideAdd = (e) => {
@@ -213,9 +212,9 @@ const showHideAdd = (e) => {
     resetForm();
 };
 
-const addFeature = (e) => {
+const addChar = (e) => {
     e.preventDefault();
-    const section = document.getElementById("feature-boxes");
+    const section = document.getElementById("char-group");
     const input = document.createElement("input");
     input.type = "text";
     section.append(input);
@@ -230,5 +229,5 @@ window.onload = () => {
         document.querySelector(".dialog").classList.add("transparent");
     };
 
-    document.getElementById("add-feature").onclick = addFeature;
+    document.getElementById("add-char").onclick = addChar;
 };

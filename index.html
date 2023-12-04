@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <link rel="stylesheet" href="styles.css" />
     <script src="script.js"></script>
 </head>
+
 <body>
+
     <header>
-        <h1>Professional Car Models</h1>
+        <h1>World Class Luxury Cars</h1>
         <div id="data-status" class="hidden"></div>
     </header>
 
     <section class="flex-container">
         <section id="main-content">
-            <a href="#" id="add-link">+ Add A Car</a>
+            <a href="#" id="add-link">+ Add Another Car</a>
             <section id="car-list" class="flex-container"></section>
             <section id="hide-details" class="hidden">
                 <section id="car-details" class="flex-container">
@@ -25,7 +28,7 @@
             <span class="close">&times;</span>
             <h3 id="add-edit"></h3>
             <form id="car-form" method="post">
-                <input type="hidden" id="_id" name="_id"> <!-- value="-1" -->
+                <input type="hidden" id="_id" name="_id">
                 <p>
                     <label for="make">Make:</label>
                     <input type="text" id="make" name="make" required />
@@ -38,17 +41,13 @@
                     <label for="year">Year:</label>
                     <input type="number" id="year" name="year" required />
                 </p>
-                <p>
-                    <label for="type">Type:</label>
-                    <input type="text" id="type" name="type" required />
-                </p>
-                <p id="features-p">
-                    <label class="inline">Features:</label>
-                    <a href="#" id="add-feature">Add Feature</a>
-                    <section id="feature-boxes"></section>
+                <p id="chars-p">
+                    <label class="inline">Characteristics:</label>
+                    <a href="#" id="add-char">Add Characteristic:</a>
+                    <section id="char-group"></section>
                 </p>
                 <p>
-                    <label for="img">Upload Image:</label>
+                    <label for="img">Add Image:</label>
                     <input type="file" id="img" name="img" />
                 </p>
                 <p>
@@ -57,5 +56,7 @@
             </form>
         </section>
     </section>
+
 </body>
+
 </html>

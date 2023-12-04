@@ -8,14 +8,12 @@ const cors = require("cors");
 app.use(cors());
 const mongoose = require("mongoose");
 
-const upload = multer({ dest: __dirname + "/public/images" });
+const upload = multer({ dest: __dirname + "/public/imgs" });
 
 mongoose
-  .connect(
-    ""
-  )
+  .connect("mongodb+srv://jzelinsky18:nSzIkd4O4vtyOCo0@cluster0.0fwvmjy.mongodb.net/?retryWrites=true&w=majority")
   .then(() => console.log("Connected to mongodb..."))
-  .catch((err) => console.error("could not connect ot mongodb...", err));
+  .catch((err) => console.error("could not connect to mongodb...", err));
 
 app.get("/", (req, res) => {
     res.sendFile(__dirname + "/index.html");
@@ -25,8 +23,7 @@ const carSchema = new mongoose.Schema({
     make: String,
     model: String,
     year: Number,
-    type: String,
-    features: [String],
+    chars: [String],
     img: String,
     _id: Number
 });
@@ -67,12 +64,11 @@ app.post("/api/cars", upload.single("img"), async (req, res) => {
         make: req.body.make,
         model: req.body.model,
         year: req.body.year,
-        type: req.body.type,
-        features: req.body.features.split(","),
+        chars: req.body.chars.split(","),
     });
 
     if (req.file) {
-        car.img = "images/" + req.file.filename;
+        car.img = "imgs/" + req.file.filename;
     }
 
     createCar(car, res);
@@ -98,8 +94,7 @@ const updateCar = async (req, res) => {
         make: req.body.make,
         model: req.body.model,
         year: req.body.year,
-        type: req.body.type,
-        features: req.body.features.split(","),
+        chars: req.body.chars.split(","),
     };
 
     if (req.file) {
@@ -126,8 +121,7 @@ const validateCar = (car) => {
         make: Joi.string().required(),
         model: Joi.string().required(),
         year: Joi.number().integer().required(),
-        type: Joi.string().required(),
-        features: Joi.allow(""),
+        chars: Joi.allow(""),
     });
 
     return schema.validate(car);
